@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Flight Delay Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+    padding:20px;
+}
+
+/* Header */
+
+.header{
+    margin-bottom:35px;
+}
+
+.header h1{
+    font-size:2.5rem;
+}
+
+.header p{
+    color:#cbd5e1;
+}
+
+/* KPI Cards */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-bottom:35px;
+}
+
+.card{
+    background:#1e293b;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+    transition: 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,.5);
+    border-color: rgba(255, 211, 105, 0.3);
+}
+
+.card h2{
+    font-size:2rem;
+    margin-bottom:10px;
+    color:#ffd369;
+}
+
+.card p{
+    color:#cbd5e1;
+}
+
+/* Chart Section */
+
+.chart-box{
+    background:#1e293b;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:30px;
+    text-align:center;
+}
+
+.chart-box h2{
+    margin-bottom:20px;
+}
+
+.chart-box img{
+    width:100%;
+    border-radius:15px;
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+    .header h1{
+        font-size:2rem;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>Flight Delay Dashboard</h1>
+
+    <p>Analytics using 2019 & 2020 datasets</p>
+
+</div>
+
+<!-- KPI CARDS -->
+
+<div class="cards">
+
+    <div class="card">
+        <h2>{{ total_flights }}</h2>
+        <p>Total Flights</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ total_delayed }}</h2>
+        <p>Delayed Flights</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ delay_percentage }}%</h2>
+        <p>Delay Percentage</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ best_airline }}</h2>
+        <p>Best Airline</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ worst_airport }}</h2>
+        <p>Worst Airport</p>
+    </div>
+
+</div>
+
+<!-- Charts -->
+
+<div class="chart-box">
+
+    <h2>Flight Delay Trend</h2>
+
+    <div style="position: relative; height:40vh; width:100%;">
+        <canvas id="delayChart"></canvas>
+    </div>
+
+</div>
+
+<div class="chart-box">
+
+    <h2>Top Delayed Airlines</h2>
+
+    <div style="position: relative; height:40vh; width:100%;">
+        <canvas id="airlineChart"></canvas>
+    </div>
+
+</div>
+
+<div class="chart-box">
+
+    <h2>Worst Airports</h2>
+
+    <div style="position: relative; height:40vh; width:100%;">
+        <canvas id="airportChart"></canvas>
+    </div>
+
+</div>
+
+<!-- Import Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Get the data passed from Flask
+    const labels = {{ labels | tojson }};
+    const values = {{ values | tojson }};
+    const airlineLabels = {{ airline_labels | tojson }};
+    const airlineValues = {{ airline_values | tojson }};
+    const airportLabels = {{ airport_labels | tojson }};
+    const airportValues = {{ airport_values | tojson }};
+
+    // Global Chart Defaults for Dark Theme
+    Chart.defaults.color = '#cbd5e1';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+
+    // 1. Line Chart: Delay Trend
+    new Chart(document.getElementById('delayChart'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Delayed Flights',
+                data: values,
+                borderColor: '#ffd369',
+                backgroundColor: 'rgba(255, 211, 105, 0.2)',
+                borderWidth: 3,
+                pointBackgroundColor: '#fff',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    // 2. Bar Chart: Airlines
+    new Chart(document.getElementById('airlineChart'), {
+        type: 'bar',
+        data: {
+            labels: airlineLabels,
+            datasets: [{
+                label: 'Total Delays',
+                data: airlineValues,
+                backgroundColor: '#00bcd4',
+                borderRadius: 5
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    // 3. Bar Chart: Airports
+    new Chart(document.getElementById('airportChart'), {
+        type: 'bar',
+        data: {
+            labels: airportLabels,
+            datasets: [{
+                label: 'Total Delays',
+                data: airportValues,
+                backgroundColor: '#ff5252',
+                borderRadius: 5
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+</script>
+</body>
+</html>

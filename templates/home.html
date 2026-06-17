@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Flight Delay Prediction</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+    url("https://www.aerotime.aero/images/saudi_plans_its_third_new_airline-800x500.jpg");
+    background-size:cover;
+    background-position:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:700px;
+    text-align:center;
+    padding:50px 35px;
+    border-radius:25px;
+    backdrop-filter:blur(12px);
+    background:rgba(255,255,255,0.08);
+    box-shadow:0 8px 30px rgba(0,0,0,0.3);
+    color:white;
+}
+
+h1{
+    font-size:clamp(2rem,5vw,4rem);
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+p{
+    font-size:clamp(1rem,2vw,1.2rem);
+    color:#f1f1f1;
+    line-height:1.7;
+    margin-bottom:40px;
+}
+
+button{
+    padding:15px 35px;
+    border:none;
+    border-radius:50px;
+    background:white;
+    color:#111;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    background:#ffd369;
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:35px 20px;
+    }
+
+    button{
+        width:100%;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Flight Delay Prediction</h1>
+
+    <p>
+        Predict flight delays instantly using smart analytics.
+        Continue with single record prediction for quick results.
+    </p>
+
+    <form action="{{ url_for('single') }}" method="POST">
+
+        <button type="submit">
+            Single Record Prediction
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

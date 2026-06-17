@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dataset Preview</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+    url("../static/images/flight.jpg");
+    background-size:cover;
+    background-position:center;
+    color:white;
+    padding:20px;
+}
+
+/* Navbar */
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+    flex-wrap:wrap;
+}
+
+.logo{
+    font-size:1.7rem;
+    font-weight:700;
+}
+
+.logo span{
+    color:#ffd369;
+}
+
+/* Main Container */
+
+.container{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+    padding:30px;
+    border-radius:25px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
+}
+
+/* Heading */
+
+h1{
+    text-align:center;
+    margin-bottom:30px;
+    font-size:2.5rem;
+}
+
+/* Table */
+
+.table-box{
+    overflow-x:auto;
+    border-radius:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:rgba(255,255,255,.08);
+    color:white;
+}
+
+th,td{
+    padding:14px;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+th{
+    background:rgba(255,255,255,.12);
+}
+
+/* Button */
+
+.btn-box{
+    text-align:center;
+    margin-top:35px;
+}
+
+button{
+    padding:15px 35px;
+    border:none;
+    border-radius:50px;
+    background:#ffd369;
+    color:black;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:white;
+    transform:translateY(-3px);
+}
+
+/* Loader */
+
+.loader{
+    width:55px;
+    height:55px;
+    border:5px solid rgba(255,255,255,.2);
+    border-top:5px solid #ffd369;
+    border-radius:50%;
+    margin:25px auto 0;
+    display:none;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    h1{
+        font-size:2rem;
+    }
+
+    .container{
+        padding:20px;
+    }
+
+    th,td{
+        font-size:.85rem;
+        padding:10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        Flight <span>Delay</span>
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <h1>Dataset Preview</h1>
+
+    <div class="table-box">
+
+        {{ df_view.to_html(classes="table", na_rep="-") | safe }}
+
+    </div>
+
+    <div class="btn-box">
+
+        <a href="{{ url_for('download_predictions') }}">
+            <button type="button">Download Predictions (CSV)</button>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

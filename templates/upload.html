@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Upload Dataset</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+    url("../static/images/flight.jpg");
+    background-size:cover;
+    background-position:center;
+    color:white;
+}
+
+/* Upload Card */
+
+.card{
+    width:100%;
+    max-width:500px;
+    padding:45px 35px;
+    border-radius:25px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
+    text-align:center;
+}
+
+/* Heading */
+
+h1{
+    font-size:2.5rem;
+    margin-bottom:15px;
+}
+
+p{
+    color:#ddd;
+    margin-bottom:35px;
+    font-size:1rem;
+}
+
+/* File Input */
+
+.file-box{
+    margin-bottom:30px;
+}
+
+input[type="file"]{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:rgba(255,255,255,.12);
+    color:white;
+    cursor:pointer;
+}
+
+/* Button */
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:50px;
+    background:#ffd369;
+    color:black;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:white;
+    transform:translateY(-3px);
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+    .card{
+        padding:35px 20px;
+    }
+
+    h1{
+        font-size:2rem;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>Upload Dataset</h1>
+
+    <p>
+        Upload your flight dataset to train and test the prediction model.
+    </p>
+
+    <form action="http://localhost:5000/preview"
+          method="POST"
+          enctype="multipart/form-data">
+
+        <div class="file-box">
+
+            <input type="file"
+                   name="datasetfile"
+                   required>
+
+        </div>
+
+        <button type="submit">
+            Upload Dataset
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

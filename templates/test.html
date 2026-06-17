@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Flight Delay Prediction</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+    url("../static/images/flight.jpg");
+    background-size:cover;
+    background-position:center;
+}
+
+/* Main Box */
+
+.container{
+    width:100%;
+    max-width:1000px;
+    padding:40px;
+    border-radius:25px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
+    color:white;
+}
+
+/* Heading */
+
+h1{
+    text-align:center;
+    margin-bottom:35px;
+    font-size:2.5rem;
+}
+
+/* Form Grid */
+
+form{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+/* Input Box */
+
+.input-box{
+    display:flex;
+    flex-direction:column;
+}
+
+label{
+    margin-bottom:8px;
+    font-size:.95rem;
+}
+
+input,
+select {
+    padding:14px;
+    border:none;
+    transition: 0.3s;
+    border-radius:12px;
+    outline:none;
+    background:rgba(255,255,255,.12);
+    color:white;
+    font-size:1rem;
+}
+
+input:focus,
+select:focus {
+    background:rgba(255,255,255,.2);
+    box-shadow: 0 0 0 2px #ffd369;
+}
+
+select option {
+    background: #1e293b; /* Dark background so options are readable */
+    color: white;
+}
+
+input::placeholder{
+    color:#ddd;
+}
+
+/* Button */
+
+.btn{
+    grid-column:1/-1;
+    padding:15px;
+    border:none;
+    border-radius:50px;
+    background:#ffd369;
+    color:black;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:white;
+    transform:translateY(-3px);
+}
+
+/* Result */
+
+.result{
+    margin-top:35px;
+    text-align:center;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result h2{
+    margin-bottom:20px;
+}
+
+/* Analysis Button */
+
+.analysis-btn{
+    display:inline-block;
+    padding:14px 30px;
+    border-radius:50px;
+    background:white;
+    color:black;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.analysis-btn:hover{
+    background:#ffd369;
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+    .container{
+        padding:25px;
+    }
+
+    h1{
+        font-size:2rem;
+    }
+
+}
+
+/* Loader Overlay */
+.loader-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+.spinner {
+    width: 60px; height: 60px;
+    border: 5px solid rgba(255,255,255,0.2);
+    border-top: 5px solid #ffd369;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="loader-overlay" id="loaderOverlay">
+    <div class="spinner"></div>
+    <p style="color: white; font-size: 1.2rem; font-weight: 500;">Analyzing flight data...</p>
+</div>
+
+<div class="container">
+
+    <h1>Flight Delay Prediction</h1>
+
+    <form id="predictionForm" action="{{ url_for('predict') }}" method="POST">
+
+        <div class="input-box">
+            <label>Day Of Month</label>
+            <input type="text" name="DAY_OF_MONTH" placeholder="Enter Day" required>
+        </div>
+
+        <div class="input-box">
+            <label>Day Of Week</label>
+            <select name="DAY_OF_WEEK" required>
+                <option value="" disabled selected>Select Day</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+                <option value="7">Sunday</option>
+            </select>
+        </div>
+
+        <div class="input-box">
+            <label>Carrier Airline ID</label>
+            <select name="OP_CARRIER_AIRLINE_ID" required>
+                <option value="" disabled selected>Select Airline</option>
+                <option value="19393">Southwest Airlines</option>
+                <option value="19790">Delta Air Lines</option>
+                <option value="19805">American Airlines</option>
+                <option value="19977">United Airlines</option>
+                <option value="20409">JetBlue Airways</option>
+            </select>
+        </div>
+
+        <div class="input-box">
+            <label>Origin Airport ID</label>
+            <select name="ORIGIN_AIRPORT_ID" required>
+                <option value="" disabled selected>Select Origin</option>
+                <option value="10397">Atlanta (ATL)</option>
+                <option value="13930">Chicago (ORD)</option>
+                <option value="11292">Denver (DEN)</option>
+                <option value="11298">Dallas/Fort Worth (DFW)</option>
+                <option value="12478">New York (JFK)</option>
+                <option value="12892">Los Angeles (LAX)</option>
+                <option value="14771">San Francisco (SFO)</option>
+            </select>
+        </div>
+
+        <div class="input-box">
+            <label>Destination Airport ID</label>
+            <select name="DEST_AIRPORT_ID" required>
+                <option value="" disabled selected>Select Destination</option>
+                <option value="10397">Atlanta (ATL)</option>
+                <option value="13930">Chicago (ORD)</option>
+                <option value="11292">Denver (DEN)</option>
+                <option value="11298">Dallas/Fort Worth (DFW)</option>
+                <option value="12478">New York (JFK)</option>
+                <option value="12892">Los Angeles (LAX)</option>
+                <option value="14771">San Francisco (SFO)</option>
+            </select>
+        </div>
+
+        <div class="input-box">
+            <label>Departure Time</label>
+            <input type="text" name="DEP_TIME" placeholder="Departure Time" required>
+        </div>
+
+        <div class="input-box">
+            <label>Arrival Time</label>
+            <input type="text" name="ARR_TIME" placeholder="Arrival Time" required>
+        </div>
+
+        <div class="input-box">
+            <label>Departure Delay (Minutes)</label>
+            <input type="number" name="DEP_DELAY" placeholder="Enter delay in minutes" required>
+        </div>
+
+        <div class="input-box">
+            <label>Diverted</label>
+            <select name="DIVERTED" required>
+                <option value="" disabled selected>Was it diverted?</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <div class="input-box">
+            <label>Distance</label>
+            <input type="text" name="DISTANCE" placeholder="Distance" required>
+        </div>
+
+        <button type="submit" class="btn">
+            Predict Flight Delay
+        </button>
+
+    </form>
+
+    {% if prediction_text %}
+
+    <div class="result">
+
+        <h2>{{ prediction_text }}</h2>
+
+        {% if explanation_text %}
+        <p style="margin-bottom: 25px; font-size: 1rem; color: #ddd; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+            {{ explanation_text }}
+        </p>
+        {% endif %}
+
+        <a href="/chart/{{ prediction_text }}" class="analysis-btn">
+            View Analysis
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+    document.getElementById('predictionForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Stop instant submission
+        document.getElementById('loaderOverlay').style.display = 'flex'; // Show loader
+        setTimeout(() => {
+            this.submit(); // Submit after 1.5s
+        }, 1500);
+    });
+</script>
+</body>
+</html>

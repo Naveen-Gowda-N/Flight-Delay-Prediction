@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Future Work</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+
+    background:
+    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+    url("https://www.aerotime.aero/images/saudi_plans_its_third_new_airline-800x500.jpg");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.container{
+    width:100%;
+    max-width:950px;
+
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+
+    padding:35px;
+    border-radius:20px;
+
+    color:white;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+    animation: slideUp 0.8s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+
+    font-size:clamp(28px,5vw,45px);
+    color:#00ffb3;
+}
+
+p{
+    line-height:1.9;
+    text-align:justify;
+
+    font-size:clamp(14px,2vw,18px);
+}
+
+.btn{
+    margin-top:30px;
+
+    padding:12px 35px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#00c853;
+    color:white;
+
+    font-size:16px;
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#009624;
+    transform:scale(1.05);
+}
+
+@media(max-width:768px){
+
+    .container{
+        padding:20px;
+    }
+
+    p{
+        line-height:1.7;
+    }
+
+    .btn{
+        width:100%;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Future Work</h1>
+
+    <p>
+        In this project, Random Forest and LSTM architectures were implemented to predict flight delays.
+        The Random Forest model produced strong performance for binary classification, while the LSTM model
+        achieved higher training accuracy because of its ability to process sequential data effectively.
+        However, overfitting remained a challenge in the LSTM model. Future improvements will focus on
+        increasing the dataset size, integrating additional parameters such as airport traffic flow,
+        weather visibility, and designing more advanced deep learning architectures to improve prediction
+        accuracy and system reliability.
+    </p>
+
+    <center>
+
+        <a href="{{ url_for('index') }}">
+
+            <button class="btn">
+                HOME
+            </button>
+
+        </a>
+        
+        <a href="{{ url_for('dashboard') }}">
+            <button class="btn" style="background:#ff5252; margin-left: 10px;">
+                DASHBOARD
+            </button>
+        </a>
+
+    </center>
+
+</div>
+
+</body>
+
+</html>

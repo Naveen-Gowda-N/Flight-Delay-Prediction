@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Flight Delay Prediction</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+
+    background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+    url("https://www.aerotime.aero/images/saudi_plans_its_third_new_airline800x500.jpg");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.container{
+    width:100%;
+    max-width:850px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    border-radius:25px;
+    padding:40px;
+    text-align:center;
+    color:white;
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+    animation: slideUp 0.8s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1{
+    font-size:clamp(2rem,5vw,3.5rem);
+    margin-bottom:20px;
+    font-weight:600;
+    letter-spacing:2px;
+}
+
+p{
+    font-size:clamp(.95rem,2vw,1.1rem);
+    line-height:1.9;
+    color:#f1f1f1;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:35px;
+    padding:14px 38px;
+    border-radius:50px;
+    background:#00bcd4;
+    color:white;
+    text-decoration:none;
+    font-size:1rem;
+    transition:.3s ease;
+}
+
+.btn:hover{
+    background:#0097a7;
+    transform:translateY(-3px);
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:25px;
+    }
+
+    p{
+        text-align:justify;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Flight Delay Prediction</h1>
+
+    <p>
+        Accurate flight delay prediction helps airlines improve operational efficiency
+        and passenger experience. This project uses Machine Learning techniques such as
+        Random Forest and LSTM to analyze aviation data, weather conditions,
+        airport information, and flight schedules for predicting delays with
+        high accuracy and reliability.
+    </p>
+
+    <a href="{{ url_for('upload') }}" class="btn">
+        Get Started
+    </a>
+    <a href="{{ url_for('dashboard') }}" class="btn" style="background:#ff5252; margin-left: 10px;">
+        Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

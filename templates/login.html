@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Flight Delay Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+    url("../static/images/flight.jpg");
+    background-size:cover;
+    background-position:center;
+    padding:20px;
+}
+
+/* Login Box */
+
+.login-box{
+    width:100%;
+    max-width:400px;
+    padding:45px 30px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
+    text-align:center;
+    color:white;
+}
+
+.login-box h1{
+    margin-bottom:30px;
+    font-size:2rem;
+    font-weight:600;
+}
+
+/* Input Fields */
+
+.input-box{
+    margin-bottom:20px;
+}
+
+.input-box input{
+    width:100%;
+    padding:15px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:rgba(255,255,255,.15);
+    color:white;
+    font-size:1rem;
+}
+
+.input-box input::placeholder{
+    color:#ddd;
+}
+
+/* Forgot Password */
+
+.forgot{
+    text-align:right;
+    margin-bottom:25px;
+}
+
+.forgot a{
+    color:#ffd369;
+    text-decoration:none;
+    font-size:.9rem;
+}
+
+/* Button */
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:50px;
+    background:#ffd369;
+    color:black;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:white;
+    transform:translateY(-3px);
+}
+
+/* Mobile */
+
+@media(max-width:500px){
+
+    .login-box{
+        padding:35px 20px;
+    }
+
+}
+
+</style>
+
+<script>
+
+function forgot_password(){
+    alert("Please contact administrator");
+}
+
+function login(){
+
+    var uname = document.getElementById("uname").value;
+    var pwd = document.getElementById("pwd").value;
+
+    if(uname === "admin" && pwd === "admin"){
+
+        alert("Login Successful");
+        window.location.href = "{{ url_for('abstract') }}";
+
+    }else{
+
+        alert("Invalid Username or Password");
+
+    }
+
+    return false;
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h1>Login</h1>
+
+    <form onsubmit="return login()">
+
+        <div class="input-box">
+            <input type="text"
+                   id="uname"
+                   placeholder="Username"
+                   required>
+        </div>
+
+        <div class="input-box">
+            <input type="password"
+                   id="pwd"
+                   placeholder="Password"
+                   required>
+        </div>
+
+        <div class="forgot">
+            <a href="#" onclick="forgot_password()">
+                Forgot Password?
+            </a>
+            <br><br>
+            <a href="{{ url_for('dashboard') }}" style="color:#00bcd4;text-decoration:none;font-size:.9rem;">
+                View Dashboard
+            </a>
+        </div>
+
+        <button type="submit">
+            LOGIN
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
