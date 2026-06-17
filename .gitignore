@@ -1,0 +1,9 @@
+*Jan_2019.csv
+*Jan_2020.csv
+.ipynb_checkpoints/
+Model/
+static/
+templates/
+venv/
+__pycache__/
+test data/
